@@ -9,6 +9,8 @@ builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
 builder.Services.AddScoped<IDomainService, DomainService>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
 var app = builder.Build();
 app.UseRouting();
 app.UseAuthentication();

@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using MultiDomain.Infrastructure.Interfaces;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace MultiDomain.UI.Api.Controllers
 {
@@ -19,7 +23,8 @@ namespace MultiDomain.UI.Api.Controllers
         [HttpGet]
         public IActionResult Hello()
         {
-            string host = _httpContextAccessor.HttpContext.Request.Host.Value;
+ 
+            string host = _httpContextAccessor.HttpContext.Request.GetDisplayUrl();
             return Ok($"{host} Sitesindesin");
         }
     }
