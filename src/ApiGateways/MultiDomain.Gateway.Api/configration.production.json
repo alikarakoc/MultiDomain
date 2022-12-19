@@ -1,0 +1,17 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/services/ui/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ],
+      "UpstreamSchema": "http"
+    }
+  ]
+}
