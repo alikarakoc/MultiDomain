@@ -6,7 +6,7 @@ namespace MultiDomain.Infrastructure.Services
     {
         public string GetDomainName()
         {
-            return "deneme";
+            return "alikarakoc.com";
         }
     }
 }
