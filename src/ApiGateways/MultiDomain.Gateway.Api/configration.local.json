@@ -6,7 +6,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5018
+          "Port": 6001
         }
       ],
       "UpstreamPathTemplate": "/services/ui/{everything}",
