@@ -2,7 +2,9 @@ using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
-builder.Configuration.AddJsonFile($"configration.{builder.Environment.EnvironmentName.ToLower()}.json");
+builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
+               .AddJsonFile("configration.json")
+               .AddJsonFile($"configration.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
 builder.Configuration.AddEnvironmentVariables();
 builder.Services.AddCors(options => options.AddPolicy("AllowCors", builder =>
 {
@@ -18,7 +20,6 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapDefaultControllerRoute();
 });
-app.UseWebSockets();
 app.UseOcelot().Wait();
 app.Run();
 

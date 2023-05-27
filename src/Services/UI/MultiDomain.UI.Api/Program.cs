@@ -1,6 +1,5 @@
 using MultiDomain.Infrastructure.Interfaces;
 using MultiDomain.Infrastructure.Services;
-using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpContextAccessor();
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())

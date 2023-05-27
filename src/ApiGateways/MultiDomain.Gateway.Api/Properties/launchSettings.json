@@ -20,7 +20,7 @@
   },
   "IIS Express": {
     "commandName": "IISExpress",
-    "launchBrowser": true,
+    "launchBrowser": false,
     "applicationUrl": "http://localhost:5010",
     "environmentVariables": {
       "ASPNETCORE_ENVIRONMENT": "production"

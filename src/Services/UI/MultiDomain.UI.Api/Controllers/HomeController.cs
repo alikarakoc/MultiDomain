@@ -1,11 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Extensions;
+﻿using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
 using MultiDomain.Infrastructure.Interfaces;
 using System.Net;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace MultiDomain.UI.Api.Controllers
 {
@@ -15,7 +11,36 @@ namespace MultiDomain.UI.Api.Controllers
     {
         private readonly IDomainService _domainService;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private static string GetSubDomain(HttpContext httpContext)
+        {
+            var subDomain = string.Empty;
 
+            var host = httpContext.Request.Host.Host;
+
+            if (!string.IsNullOrWhiteSpace(host))
+            {
+                subDomain = host.Split('.')[0];
+            }
+
+            return subDomain.Trim().ToLower();
+        }
+        public string ClientIp
+        {
+            get
+            {
+                string ip = string.Empty;
+                if (_httpContextAccessor.HttpContext.Request.Headers.ContainsKey("CF-Connecting-IP"))
+                {
+                    ip = _httpContextAccessor.HttpContext.Request.Headers["CF-Connecting-IP"];
+                }
+                else
+                {
+                    ip = _httpContextAccessor.HttpContext.Features.Get<IHttpConnectionFeature>()?.RemoteIpAddress
+                        .ToString();
+                }
+                return ip;
+            }
+        }
         public HomeController(IDomainService domainService, IHttpContextAccessor httpContextAccessor)
         {
             _domainService = domainService;
@@ -25,9 +50,7 @@ namespace MultiDomain.UI.Api.Controllers
         [HttpGet]
         public IActionResult Hello()
         {
-            var ip = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress;
-
-            return Ok($"GetHostEntry() returns HostName: {GetHeader(_httpContextAccessor.HttpContext.Request,"Host")}");
+            return Ok($"Merhaba beni {GetSubDomain(_httpContextAccessor.HttpContext)} bu alana göre inşa et. HostName: {ClientIp} {GetSubDomain(_httpContextAccessor.HttpContext)}");
         }
         public string DoGetHostEntry(IPAddress address)
         {
